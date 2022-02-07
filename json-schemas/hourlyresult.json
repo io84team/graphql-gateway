@@ -1,0 +1,35 @@
+{
+    "definitions": {
+        "HourlyResult": {
+            "type": "object",
+            "title": "HourlyResult",
+            "description": "HourlyResult Object",
+            "properties": {
+                "appId": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "hour": {
+                    "type": "string"
+                },
+                "manufacturer": {
+                    "type": "string"
+                },
+                "dau": {
+                    "type": "integer"
+                }
+            }
+        },
+        "HourlyResults": {
+            "type": "array",
+            "title": "HourlyResults",
+            "description": "HourlyResult Array",
+            "items": {
+                "$ref": "#/definitions/HourlyResult"
+            },
+            "uniqueItems": true
+        }
+    }
+}

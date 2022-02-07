@@ -1,0 +1,46 @@
+meshLogging: info
+sources:
+    - name: GraphQLApi
+      handler:
+          graphql:
+              endpoint: http://localhost:8080/graphql
+              multipart: true
+              operationHeaders:
+                  Api-Authorization: "{context.headers['authorization']}"
+
+    - name: AuthAccessGraphQLApi
+      handler:
+          graphql:
+              endpoint: http://localhost:8088/graphql
+              multipart: true
+              operationHeaders:
+                  Authorization: "{context.headers['authorization']}"
+
+    # - name: MySQLApi
+    #   handler:
+    #       mysql:
+    #           host: localhost
+    #           port: 3306
+    #           user: root
+    #           password: '123456'
+    #           database: test
+
+serve:
+    port: 4000
+    cors:
+        origin: '*' # just for test.
+    playground: true
+    exampleQuery: |
+        query companies ($where: CompanyWhereInput, $orderBy: [QueryCompaniesOrderByOrderByClause!], $trashed: Trashed) {
+          companies (where: $where, orderBy: $orderBy, trashed: $trashed) {
+                id
+                name
+                status
+                order
+                organizations {
+                    id
+                    name
+                    status
+                }
+            }
+        }

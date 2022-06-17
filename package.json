@@ -3,14 +3,19 @@
     "version": "1.0.0",
     "license": "MIT",
     "scripts": {
-        "start": "NODE_ENV=production graphql-mesh serve",
-        "debug": "NODE_ENV=debug graphql-mesh serve"
+        "start": "mesh start",
+        "build": "mesh build",
+        "dev": "mesh dev",
+        "online": "mesh build && mesh start"
     },
     "dependencies": {
-        "@graphql-mesh/cli": "^0.30.2",
-        "@graphql-mesh/graphql": "^0.17.10",
-        "@graphql-mesh/mysql": "^0.10.9",
-        "@graphql-mesh/openapi": "^0.16.10",
-        "graphql": "^15.5.0"
+        "@graphql-mesh/cli": "^0.73.1",
+        "@graphql-mesh/graphql": "^0.27.2",
+        "@graphql-mesh/json-schema": "^0.28.18",
+        "@graphql-mesh/mysql": "^0.16.5",
+        "@graphql-mesh/openapi": "^0.26.2",
+        "@graphql-mesh/transform-filter-schema": "^0.14.62",
+        "@graphql-mesh/transform-rename": "^0.12.52",
+        "graphql": "^16.5.0"
     }
 }

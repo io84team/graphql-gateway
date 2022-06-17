@@ -41,18 +41,215 @@ sources:
     #                     to: String
     #                 method: GET
     #                 responseSchema: ./json-schemas/hourlyresult.json#/definitions/HourlyResults
+    - name: SspIdCoreRESTFulApi
+      handler:
+          jsonSchema:
+              baseUrl: http://ssp-id-core-svc
+              operations:
+                  - type: Query
+                    field: appList
+                    path: /app/list
+                    method: GET
+                    responseSchema: ./json-schemas/applist-schemas.json#/definitions/AppDetailResults
+                  - type: Query
+                    field: posList
+                    path: /pos/list
+                    method: GET
+                    responseSchema: ./json-schemas/applist-schemas.json#/definitions/PosDetailResults
+                  - type: Query
+                    field: pAppList
+                    path: /platformapp/list
+                    method: GET
+                    responseSchema: ./json-schemas/applist-schemas.json#/definitions/PAppDetailResults
+                  - type: Query
+                    field: pPosList
+                    path: /platformpos/list
+                    method: GET
+                    responseSchema: ./json-schemas/applist-schemas.json#/definitions/PPosDetailResults
+transforms:
+    - rename:
+          mode: bare | wrap
+          renames:
+              - from:
+                    type: AppDetail
+                    field: app_name
+                to:
+                    type: AppDetail
+                    field: appName
+              - from:
+                    type: AppDetail
+                    field: app_bundle_id
+                to:
+                    type: AppDetail
+                    field: appBundleId
+              - from:
+                    type: PAppDetail
+                    field: app_bundle_id
+                to:
+                    type: PAppDetail
+                    field: appBundleId
+              - from:
+                    type: PAppDetail
+                    field: app_description
+                to:
+                    type: PAppDetail
+                    field: appDescription
+              - from:
+                    type: PAppDetail
+                    field: media_id
+                to:
+                    type: PAppDetail
+                    field: mediaId
+              - from:
+                    type: PosDetail
+                    field: app_id
+                to:
+                    type: PosDetail
+                    field: appId
+              - from:
+                    type: PosDetail
+                    field: pos_name
+                to:
+                    type: PosDetail
+                    field: posName
+              - from:
+                    type: PosDetail
+                    field: is_active
+                to:
+                    type: PosDetail
+                    field: isActive
+              - from:
+                    type: PPosDetail
+                    field: app_id
+                to:
+                    type: PPosDetail
+                    field: appId
+              - from:
+                    type: PPosDetail
+                    field: is_active
+                to:
+                    type: PPosDetail
+                    field: isActive
 serve:
     port: 4000
     cors:
         origin: '*' # just for test.
     playground: true
     exampleQuery: |
-        query HourlyResults($appId: String!, $from: String, $to: String) {
-          hourlyResults(appId: $appId, from: $from, to: $to) {
+        query DauResults {
+          mediaHourlyResults(where: {appId: "10399"}) {
             appId
+            appName
             date
             hour
-            manufacturer
             dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          mediaDailyResults(where: {appIds: ["10364", "10399"]}) {
+            appId
+            appName
+            date
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          upstreamCorpHourlyResults(where: {corpId: "1"}) {
+            corpId
+            corpName
+            date
+            hour
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          upstreamCorpDailyResults(where: {corpIds: ["10364", "10399"]}) {
+            corpId
+            corpName
+            date
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          upstreamMediaHourlyResults(where: {mediaId: "1"}) {
+            mediaId
+            mediaName
+            date
+            hour
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          upstreamMediaDailyResults(where: {mediaIds: ["10364", "10399"]}) {
+            mediaId
+            mediaName
+            date
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          upstreamPAppHourlyResults(where: {pAppId: "1109866913"}) {
+            pAppId
+            pAppName
+            date
+            hour
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          upstreamPAppDailyResults(where: {pAppIds: ["10364", "10399"]}) {
+            pAppId
+            pAppName
+            date
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          upstreamPPosHourlyResults(where: {pPosId: "260800101"}) {
+            pPosId
+            pPosName
+            date
+            hour
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
+          }
+          upstreamPPosDailyResults(where: {pPosIds: ["10364", "10399"]}) {
+            pPosId
+            pPosName
+            date
+            dau
+            oppoDau
+            vivoDau
+            huaweiDau
+            xiaomiDau
+            otherDau
           }
         }
